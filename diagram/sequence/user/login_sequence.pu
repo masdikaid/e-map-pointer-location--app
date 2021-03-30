@@ -1,0 +1,30 @@
+@startuml
+
+' login
+actor user
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+
+user -> webapp : get login
+webapp -> controller : get UserController->login()
+controller --> view : login page
+view --> user
+user -> webapp : post credentials
+webapp -> controller : post UserController->login(cred)
+controller -> model : UserModel->doLogin(user, password)
+model -> databases : read User->password
+databases --> model
+model --> controller
+controller -> model : SessionModel->insert()
+model -> databases : insert Session
+databases --> model
+model --> controller : response
+controller --> view : dashboard page
+view --> user
+
+
+
+@enduml

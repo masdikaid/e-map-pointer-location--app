@@ -1,0 +1,20 @@
+@startuml
+
+' reset password
+actor  userAdmin
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+
+userAdmin -> webapp : get force reset user password
+webapp -> controller : UserController->forceReset(user)
+controller -> model : UserModel->forceResetPassword()
+model -> databases : update Users
+databases --> model
+model --> controller
+controller --> view : success page
+view --> userAdmin
+
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+
+' reset password
+actor  userAuthenticated
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+
+userAuthenticated -> webapp : get update profile user
+webapp -> controller : get UserController->update(user)
+controller -> model : UserModel->find(user)
+model -> databases : read Users
+databases --> model
+model --> controller
+controller --> view : update profile page
+view --> userAuthenticated
+userAuthenticated -> webapp : post new profile data
+webapp -> controller : post UserController->update(user)
+controller -> model : UserModel->update(user)
+model -> databases : update Users
+databases --> model
+model --> controller
+controller --> view : success page
+view --> userAuthenticated
+
+@enduml

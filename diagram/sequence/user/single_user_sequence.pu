@@ -1,0 +1,20 @@
+@startuml
+
+' reset password
+actor  userAuthenticated
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+
+userAuthenticated -> webapp : get single user
+webapp -> controller : get UserController->view(user)
+controller -> model : UserModel->find(user)
+model -> databases : read Users
+databases --> model
+model --> controller
+controller --> view : profile page
+view --> userAuthenticated
+
+@enduml

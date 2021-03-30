@@ -1,0 +1,47 @@
+@startuml
+
+' create user
+actor  userAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+user -> webapp + : get /user/add/
+webapp -> controller + : get UserController->create()
+controller -> model + : RoleGroupModel->findAll()
+model -> databases + : read RoleGroup
+return
+return
+controller --> view - : create user page
+activate view
+view --> user -
+deactivate webapp 
+
+user -> webapp + : post /user/add/
+webapp -> controller + : post UserController->create(data)
+controller -> model + : UserModel->create(data)
+group transaction
+model -> model  : UserModel->insert()
+model -> databases + : write User
+return
+loop n array roleGroup times
+model -> model  : RoleGroupModel->assignTo(user)
+model -> databases + : write RoleGroupRoles
+return
+end group
+return
+controller --> view -+ : success page
+activate view
+view --> user -
+
+
+
+
+
+@enduml

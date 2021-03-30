@@ -1,0 +1,19 @@
+@startuml
+
+' reset password
+actor  userAdmin
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+
+userAdmin -> webapp : get user delete id
+webapp -> controller : UserController->delete(user)
+controller -> model : UserModel->delete(user)
+model -> databases : soft delete Users
+databases --> model
+model --> controller
+controller --> view : success page
+view --> userAdmin
+@enduml

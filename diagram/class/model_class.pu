@@ -1,0 +1,95 @@
+@startuml
+
+class UserModel {
+    + int id
+    + string name
+    + string email
+    + string password
+    + int phone
+    # User create_by_id
+    # datetime created_at
+    # datetime updated_at
+    # datetime deleted_at
+    + insert() : bool
+    + update() : bool
+    + find() : User
+    + findAll() : Array
+    + delete() : bool
+    + save() : bool
+    + create()
+    + findByEmail() : User
+    + onlyDeleted() : bool
+    + doLogin() : User
+    + doLogOut() : bool
+    + changeEmail() : bool
+    + getGroups()
+    + updateGroups()
+    + changePassword() : bool
+    + forceResetPassword() : bool
+    + isActive() : bool
+}
+
+class RoleGroupModel {
+    + int id
+    + string name
+    + string desc
+    # User create_by_id
+    # datetime created_at
+    # datetime updated_at
+    # datetime deleted_at
+    + find()
+    + findAll()
+    + onlyDeleted()
+    + insert()
+    + update()
+    + delete()
+    + save()
+    + create()
+    + updateRole()
+    + getRoleList()
+    + getAllRole()
+    + getRoleListWithAllRoles()
+    + asignTo()
+    + removeAsignedRoleTo()
+}
+
+class LocationModel {
+    + int nop
+    + int lng
+    + int lat
+    # User create_by_id
+    # datetime created_at
+    # datetime updated_at
+    # datetime deleted_at
+    + find()
+    + findAll() : Location
+    + onlyDeleted() : void
+    + insert()
+    + update()
+    + delete()
+    + save()
+}
+
+class ResetPasswordKeyModel {
+    + insert()
+    + find()
+}
+
+class SessionModel {
+    + insert()
+    + delete()
+    + find()
+}
+
+class RoleGroupRolesModel {
+    + insert()
+    + delete()
+    + updateRole()
+}
+
+class UserRoleGroupsModel{
+
+}
+
+
+@enduml

@@ -1,5 +1,7 @@
 @startuml
 
+title **Update Assigned User Role Group Sequence**
+
 actor userAuthenticated as user
 
 box
@@ -12,13 +14,13 @@ end box
 
 skinparam BoxPadding 80
 
-user -> webapp + : post /user/group/
-webapp -> controller + : UserController->updateGroup(data)
-controller -> model + : UserModel->updateGroup(data)
+user -> webapp ++ : post /user/group/
+webapp -> controller ++ : UserController->updateGroup(data)
+controller -> model ++ : UserModel->updateGroup(data)
 model -> model : UserModel->getGroups()
 model -> model : RoleGroupModel->findAll()
 loop n array RoleGroup
-model -> databases + : update UserRoleGroup
+model -> databases ++ : update UserRoleGroup
 note left
 looping for compare rolegroup
 loop old group role first 
@@ -30,6 +32,6 @@ end note
 return
 return
 end loop
-controller --> view + : redirect /user/profile/userid/
-view  --> user -
+controller --> view ++ : redirect /user/profile/userid/
+view  --> user --
 @enduml

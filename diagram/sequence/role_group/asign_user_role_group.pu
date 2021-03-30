@@ -1,0 +1,21 @@
+@startuml
+
+title **Assign New User Role Group Sequence**
+
+actor  UserAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+activate controller
+controller -> model + : RoleGroupModel->asignTo(user)
+model -> model  : UserRoleGroupsModel->insert()
+model -> databases + : insert UserRoleGroup
+return
+model --> controller
+@enduml

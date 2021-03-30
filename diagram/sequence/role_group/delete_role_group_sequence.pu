@@ -1,0 +1,50 @@
+@startuml
+
+title **Role Group Deletion Sequence**
+
+actor  UserAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+
+user -> webapp ++ : get /group/delete/id
+webapp -> controller ++ : get RoleGroupControler->delete(id)
+controller --> view -- : add role group page
+activate view
+view --> user --
+webapp --
+
+
+
+user -> webapp ++ : post /group/delete/id
+
+webapp -> controller ++ : post RoleGroupController->delete(id)
+
+controller -> model ++  : RoleGroupRoleModel->getRoleFor()
+model -> databases ++ : soft delete RoleGroups
+return
+return
+
+controller -> model ++  : RoleGroupModel->delete()
+model -> databases ++ : soft delete RoleGroups
+return
+return
+
+controller -> model ++ : RoleGroupRoleModel->delete(array)
+model -> databases ++ : delete RoleGroupRoles
+return
+return
+
+controller --> view -- : redirect /group/ (role group list)
+activate view
+view --> user --
+webapp --
+
+@enduml

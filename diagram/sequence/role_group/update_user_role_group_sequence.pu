@@ -1,0 +1,35 @@
+@startuml
+
+actor userAuthenticated as user
+
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+user -> webapp + : post /user/group/
+webapp -> controller + : UserController->updateGroup(data)
+controller -> model + : UserModel->updateGroup(data)
+model -> model : UserModel->getGroups()
+model -> model : RoleGroupModel->findAll()
+loop n array RoleGroup
+model -> databases + : update UserRoleGroup
+note left
+looping for compare rolegroup
+loop old group role first 
+is old group in new role group
+if true ignore and 
+remove item from new role group, 
+if false remove AsignedRole
+end note
+return
+return
+end loop
+controller --> view + : redirect /user/profile/userid/
+view  --> user -
+@enduml

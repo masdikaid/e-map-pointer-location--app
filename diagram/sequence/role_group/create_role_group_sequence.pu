@@ -1,0 +1,46 @@
+@startuml
+
+title **Create Role Group Sequence**
+
+actor  UserAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+user -> webapp ++ : get /group/create/
+webapp -> controller ++ : get RoleGroupControler->create()
+controller -> model ++ : RoleGroupModel->findAll()
+model -> databases ++ : read Roles
+return
+return
+controller --> view -- : add role group page
+view ++
+view --> user --
+webapp --
+
+
+user -> webapp ++ : post /group/create/
+webapp -> controller ++ : post RoleGroupController->create(data_and_arrayRole)
+controller -> model ++ : RoleGroupModel->create(data_and_arrayRole)
+model -> model : RoleGroupModel->insert()
+model -> databases ++ : insert RoleGroups
+return
+loop n times array role
+model -> model : RoleGroupRoleModel->insert()
+model -> databases ++ : insert RoleGroupRoles
+return
+end
+return
+
+controller --> view -- : redirect /group/ (role group list)
+view ++
+view --> user --
+webapp --
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+
+title **Remove Assigned User Role Group Sequence**
+
+actor  UserAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+activate controller
+controller -> model + : RoleGroupModel->removeAsignedRoleTo(user)
+model -> model  : UserRoleGroupsModel->delete()
+model -> databases + : delete UserRoleGroup
+return
+model --> controller
+@enduml

@@ -1,0 +1,68 @@
+@startuml
+
+title **Role Group Update Sequence**
+actor  UserAuthenticated as User
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+
+User -> webapp ++ : get group/update/id
+webapp -> controller ++ : get RoleGroupControler->update(data)
+controller -> model ++ : RoleGroupModel->get(id)
+model -> model : RoleGroupModel->find(id)
+model -> databases ++ : read RoleGroups
+return
+
+model -> model : RoleGroupModel->getRoleListWithAllRoles()
+
+model -> databases ++ : read RoleGroupRoles
+return
+
+model -> databases ++ : read Roles
+return
+loop n times array role
+return
+note left
+looping to compare and
+check if role is in RoleGroup 
+end note
+end
+
+controller --> view -- : update role group page
+activate view
+view --> User --
+webapp --
+
+
+User -> webapp ++ : post group/update/id
+webapp -> controller ++ : post RoleGroupController->update(data_and_arrayRole)
+controller -> model ++ : RoleGroupModel->updateRole(data_and_arrayRole)
+
+model -> databases ++ : update RoleGroups
+return
+
+model -> model : RoleGroupRoleModel->updateRole(array)
+loop n times
+model -> databases ++ : insert/delete RoleGroupRoles
+note left
+looping for array and compare 
+with old array role
+end note
+return
+end
+return
+
+
+controller --> view : redirect /group/ (role group list)
+controller --
+view --> User
+webapp --
+
+@enduml

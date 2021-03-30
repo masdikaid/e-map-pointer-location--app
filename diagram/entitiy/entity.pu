@@ -1,0 +1,91 @@
+@startuml
+
+entity Users {
+    *id : int <<auto increment>> <<primary>>
+    --
+    name : varchar(100)
+    email : varchar(100) unique
+    password : varchar(300)
+    phone : int(14) unique
+    created_by_id : int <<FK>> nullable
+    created_at : datetime
+    updated_at : datetime nullable
+    deleted_at : datetime nullable
+}
+
+entity Roles {
+    *id : int <<auto increment>> <<primary>>
+    --
+    name : varchar(100)
+    desc : varchar(300)
+}
+
+entity RoleGroups {
+    *id : int <<auto increment>> <<primary>>
+    --
+    name : varchar(100)
+    desc : varchar(300)
+    created_by_id : int <<FK>>
+    created_at : datetime
+    updated_at : datetime nullable
+    deleted_at : datetime nullable
+}
+
+entity Locations {
+    *nop : int(30) <<primary>>
+    --
+    lng : int(10)
+    lat : int(10)
+    created_by_id : int <<FK>>
+    created_at : datetime
+    updated_at : datetime nullable
+    deleted_at : datetime nullable
+}
+
+entity UserRoleGroups {
+    * id : string <<primary>>
+    user_id : int <<FK>>
+    role_group_id : int <<FK>>
+    create_at : datetime
+    deleted_at : datetime
+}
+
+entity RoleGroupRoles {
+    * id : string <<primary>
+    role_group_id : int <<FK>>
+    role_id : int <<FK>>
+    create_by_id : int <<FK>>
+    create_at : datetime
+    deleted_at : datetime
+}
+
+entity Sessions {
+    * id : string <<primary>>
+    user_id : int <<FK>>
+    created_at : datetime
+    expired_at : datetime
+    deleted_at : datetime
+}
+
+entity ResetPasswordKeys {
+    * id : string <<primary>>
+    * key : string <<unique>><<index>>
+    user_id : int <<FK>>
+    created_at : datetime
+    expired_at : datetime
+}
+
+Users }o--o| Users : create_by_id
+Users }o--|| Locations : create_by_id
+Users }o--|| RoleGroups : create_by_id
+Users }o--|| RoleGroupRoles : create_by_id
+
+Users }o--|| Sessions : O2M
+Users }o--|| ResetPasswordKeys : O2M
+Users }o--|| UserRoleGroups : M2M
+Roles }o--|| RoleGroupRoles : M2M
+RoleGroups }o--|| UserRoleGroups : M2M
+RoleGroups }o--|| RoleGroupRoles : M2M
+
+
+@enduml

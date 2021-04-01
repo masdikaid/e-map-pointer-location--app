@@ -1,0 +1,27 @@
+@startuml
+
+title **Single Location Sequence**
+
+actor userAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+user -> webapp ++ : get /location/locationID/
+webapp -> controller ++ : get LocationController->single()
+controller -> model ++ : LocationModel->find(LocationID)
+model -> databases ++ : read Location
+return
+return
+controller --> view -- : single location page
+view ++
+view --> user --
+webapp --
+
+@enduml

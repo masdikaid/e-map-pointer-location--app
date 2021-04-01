@@ -1,0 +1,34 @@
+@startuml
+
+title **Input New Location Sequence**
+
+actor userAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+user -> webapp ++ : get /location/create/
+webapp -> controller ++ : get LocationController->create()
+controller --> view -- : Add Location Page
+view ++
+view --> user --
+webapp --
+
+user -> webapp ++ : post /location/create/
+webapp -> controller ++ : post LocationController->create()
+controller -> model ++ : LocationModel->insert()
+model -> databases ++ : insert Location
+return
+return
+controller -> view -- : redirect /location/ (list page) 
+view ++
+view --> user --
+webapp --
+
+@enduml

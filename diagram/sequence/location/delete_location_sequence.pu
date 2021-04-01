@@ -1,0 +1,27 @@
+@startuml
+
+title **Delete Location Sequence**
+
+actor userAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+user -> webapp ++ : get /location/locationID/delete/
+webapp -> controller ++ : get LocationController->delete()
+controller -> model ++ : LocationModel->delete()
+model -> databases ++ : delete Location
+return
+return
+controller --> view -- : redirect /Location/ (List Page)
+view ++
+view --> user --
+webapp --
+
+@enduml

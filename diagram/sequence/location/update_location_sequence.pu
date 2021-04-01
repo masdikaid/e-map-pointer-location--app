@@ -1,0 +1,38 @@
+@startuml
+
+title **Update Location Sequence**
+
+actor userAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+user -> webapp ++ : get /location/locationID/update/
+webapp -> controller ++ : get LocationController->update()
+controller -> model ++ : LocationModel->find(LocationID)
+model -> databases ++ : read Location
+return
+return
+controller --> view -- : Update Location Page
+view ++
+view --> user --
+webapp --
+
+user -> webapp ++ : post /location/locationID/update/
+webapp -> controller ++ : post LocationController->update()
+controller -> model ++ : LocationModel->update()
+model -> databases ++ : update Location
+return
+return
+controller -> view -- : redirect /location/locationID (single page) 
+view ++
+view --> user --
+webapp --
+
+@enduml

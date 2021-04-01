@@ -1,0 +1,27 @@
+@startuml
+
+title **list Location Sequence**
+
+actor userAuthenticated as user
+box
+participant webapp
+participant view
+participant controller
+participant model
+database databases
+end box
+
+skinparam BoxPadding 80
+
+user -> webapp ++ : get /location/
+webapp -> controller ++ : get LocationController->index()
+controller -> model ++ : LocationModel->findAll()
+model -> databases ++ : read Location
+return
+return
+controller --> view -- : list location page
+view ++
+view --> user --
+webapp --
+
+@enduml

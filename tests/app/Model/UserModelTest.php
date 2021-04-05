@@ -22,7 +22,7 @@ class UserDatabaseTest extends CIDatabaseTestCase
 		parent::tearDown();
 	}
 
-	public function userFindAllTest()
+	public function testUserFindAll()
 	{
 		$model = model('UserModel');
 		$objects = $model->findAll();
@@ -30,7 +30,7 @@ class UserDatabaseTest extends CIDatabaseTestCase
 		$this->assertCount(30, $objects);
 	}
 
-	public function UserSoftDeleteTests()
+	public function testUserSoftDelete()
 	{
         $model = model('UserModel');
 

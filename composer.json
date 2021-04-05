@@ -9,9 +9,9 @@
 		"codeigniter4/framework": "^4"
 	},
 	"require-dev": {
-		"fakerphp/faker": "^1.9",
+		"fakerphp/faker": "^1.14",
 		"mikey179/vfsstream": "^1.6",
-		"phpunit/phpunit": "^9.1"
+		"phpunit/phpunit": "^9.5"
 	},
 	"suggest": {
 		"ext-fileinfo": "Improves mime type detection for files"
@@ -31,7 +31,7 @@
 		}
 	},
 	"scripts": {
-		"test": "phpunit"
+		"test": "phpdbg -qrr .\\vendor\\bin\\phpunit"
 	},
 	"support": {
 		"forum": "http://forum.codeigniter.com/",

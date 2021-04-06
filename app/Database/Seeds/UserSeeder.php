@@ -9,7 +9,7 @@ class UserSeeder extends Seeder
 {
 	public function run()
 	{
-		for ($i=0; $i < 30 ; $i++) { 
+		for ($i=0; $i < 5 ; $i++) { 
 			
 			$model = model('UserModel');
 			$users = new UserEntity();

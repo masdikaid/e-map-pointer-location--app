@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
-require_once(ROOTPATH . 'tests/app/Models/UserFabricator.php');
+namespace Tests\App\Models;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\Fabricator;
-use App\Models\UserFabricator;
+use Tests\App\Models\UserFabricator;
+use App\Models\UserModel;
 
 class UserModelTest extends CIDatabaseTestCase
 {
@@ -21,8 +21,8 @@ class UserModelTest extends CIDatabaseTestCase
 	public function setUp(): void
 	{
 		parent::setUp();
-        $this->model = new UserFabricator();
-        $this->fabricator = new Fabricator($this->model);
+        $this->model = new UserModel();
+        $this->fabricator = new Fabricator(UserFabricator::class);
 		$this->fabricator->makeObject('App\Entities\UserEntity');
 	}
 

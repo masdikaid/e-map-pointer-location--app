@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace Tests\App\Controllers;
 use CodeIgniter\Test\FeatureTestCase;
 
 

@@ -10,6 +10,7 @@ class UserModelTest extends CIDatabaseTestCase
 {
 	protected $migrateOnce = true;
     protected $seedOnce = true;
+	protected $refresh = true;
     protected $seed = "UserSeeder";
 	protected $table = 'users';
 	protected $basePath = APPPATH . 'Database';
@@ -92,7 +93,7 @@ class UserModelTest extends CIDatabaseTestCase
 		$user = $this->model->first();
 		$isverify = password_verify('masdika00', $user->password);
 		$this->assertTrue($isverify);
-	}		
+	}
 }
 
 

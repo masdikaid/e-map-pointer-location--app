@@ -5,6 +5,10 @@ use CodeIgniter\Test\FeatureTestCase;
 
 class HomeControllerTest extends FeatureTestCase
 {
+	protected $migrateOnce = true;
+    protected $refresh = true;
+	protected $basePath = APPPATH . 'Database';
+	protected $namespace = 'App';
 
 	public function setUp(): void
 	{

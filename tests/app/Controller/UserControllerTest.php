@@ -8,9 +8,7 @@ use CodeIgniter\Test\FeatureTestCase;
 class UserControllerTest extends FeatureTestCase
 {
 	protected $migrateOnce = true;
-    protected $seedOnce = true;
-    protected $seed = "UserSeeder";
-	protected $table = 'users';
+    protected $refresh = true;
 	protected $basePath = APPPATH . 'Database';
 	protected $namespace = 'App';
 
@@ -59,5 +57,6 @@ class UserControllerTest extends FeatureTestCase
 		]);
 		$res->assertOK();
 		$res->assertSee('Create Users');
+
 	}
 }

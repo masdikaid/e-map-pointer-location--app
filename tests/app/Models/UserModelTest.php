@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Support;
+namespace Tests\Support\Models;
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\Fabricator;
 

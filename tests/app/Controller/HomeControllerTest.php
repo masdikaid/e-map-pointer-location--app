@@ -1,24 +1,25 @@
 <?php
 
-namespace Tests\Support\Controllers;
-use CodeIgniter\Test\CIDatabaseTestCase;
-use CodeIgniter\Test\ControllerTester;
-use App\Controllers\Home;
+namespace App\Controllers;
+use CodeIgniter\Test\FeatureTestCase;
 
-
-class HomeControllerTest extends CIDatabaseTestCase
+class HomeControllerTest extends FeatureTestCase
 {
-	use ControllerTester;
-	protected $migrate = false;
 
-	public function testShowHomePage()
+	public function setUp(): void
 	{
-		$result = $this->controller(Home::class)
-                       ->execute('index');
+		parent::setUp();
+	}
 
-        $this->assertTrue($result->isOK());
-        $this->assertTrue($result->see('Welcome to CodeIgniter'));
+	public function tearDown(): void
+	{
+		parent::tearDown();
+	}
+
+	public function testGetHome()
+	{
+		$res = $this->call('get', '/');
+		$res->assertOK();
+		$res->assertSee('welcome');
 	}
 }
-
-

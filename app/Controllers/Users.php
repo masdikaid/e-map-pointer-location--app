@@ -27,7 +27,7 @@ class Users extends BaseController
 
             $model->save($user);
             
-            return $this->view->render('welcome_message');
+            return redirect()->to('/');
         } 
         else 
         {

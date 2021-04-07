@@ -1,17 +1,19 @@
 <?php
 
-namespace Tests\Support\Models;
+namespace App\Models;
+require_once(ROOTPATH . 'tests/app/Models/UserFabricator.php');
 use CodeIgniter\Test\CIDatabaseTestCase;
 use CodeIgniter\Test\Fabricator;
+use App\Models\UserFabricator;
 
-use Tests\Support\Models\UserFabricator;
-
-class UserDatabaseTest extends CIDatabaseTestCase
+class UserModelTest extends CIDatabaseTestCase
 {
 	protected $migrateOnce = true;
     protected $seedOnce = true;
     protected $seed = "UserSeeder";
 	protected $table = 'users';
+	protected $basePath = APPPATH . 'Database';
+	protected $namespace = 'App';
     protected $model;
     protected $fabricator;
 

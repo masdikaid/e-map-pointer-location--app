@@ -1,30 +1,22 @@
 <?php
 
-namespace Tests\Support\Controllers;
-use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\URI;
-use CodeIgniter\Test\CIDatabaseTestCase;
-use CodeIgniter\Test\ControllerTester;
-use CodeIgniter\Test\Fabricator;
+namespace App\Controllers;
+use CodeIgniter\Test\FeatureTestCase;
 
-use Tests\Support\Models\UserFabricator;
 
-use App\Controllers\Users;
 
-class UserControllerTest extends CIDatabaseTestCase
+class UserControllerTest extends FeatureTestCase
 {
-	use ControllerTester;
-	protected $migrate = false;
+	protected $migrateOnce = true;
+    protected $seedOnce = true;
+    protected $seed = "UserSeeder";
 	protected $table = 'users';
-    protected $model;
-    protected $fabricator;
+	protected $basePath = APPPATH . 'Database';
+	protected $namespace = 'App';
 
 	public function setUp(): void
 	{
 		parent::setUp();
-        $this->model = new UserFabricator();
-        $this->fabricator = new Fabricator($this->model);
-		$this->fabricator->makeObject('App\Entities\UserEntity');
 	}
 
 	public function tearDown(): void
@@ -32,28 +24,40 @@ class UserControllerTest extends CIDatabaseTestCase
 		parent::tearDown();
 	}
 
-	public function testCreateUser()
+	public function testGetCreateUser()
 	{
-		$result = $this->controller(Users::class)
-                       ->execute('create');
+		$res = $this->call('get', '/users/create');
+		$res->assertOK();
+		$res->assertSee('Create Users');
+	}
 
-        $this->assertTrue($result->isOK());
-        $this->assertTrue($result->see('Create Users'));
+	public function testPostCreateUser()
+	{
+		$criteria = [
+			'name' => 'dika',
+			'email' => 'masdika@gmail.com',
+			'password' => 'masdikaid',
+			'phone' => '085771002550'
+		];
 
+		$res = $this->call('post', '/users/create', $criteria);
 
-		$request = new IncomingRequest(new \Config\App(), new URI("http://localhost:8080/users/create"));
-
-		$criteria = $this->fabricator->make()->toArray();
-		$criteria['password'] = 'masdika00';
-		$request->setMethod('post');
-		$request->setGlobal('post', $criteria);
+		unset($criteria['password']);
 		
-		$postresult = $this->withRequest($request)
-						->controller(Users::class)
-						->execute('create');
-		
-		var_dump($request);
-		$this->assertTrue($result->isOK());
-        $this->assertTrue($result->see('welcome'));
+		$res->assertOK();
+		$res->assertRedirect();
+		$this->seeInDatabase('users', $criteria);
+	}
+
+	public function testPostCreateUserInvalidData()
+	{
+		$res = $this->call('post', '/users/create', [
+			'name' => 'di',
+			'email' => 'masdika',
+			'password' => 'ma',
+			'phone' => '0'
+		]);
+		$res->assertOK();
+		$res->assertSee('Create Users');
 	}
 }

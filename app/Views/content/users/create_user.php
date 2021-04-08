@@ -13,6 +13,9 @@
     <label for="name">password</label>
     <input type="password" name="password" id="password">
     </br>
+    <label for="name">confirm password</label>
+    <input type="password" name="confirm_password" id="confirm_password">
+    </br>
     <label for="number">phone</label>
     <input type="text" name="phone" id="phone">
     </br>

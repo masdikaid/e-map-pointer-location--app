@@ -35,12 +35,15 @@ class UserControllerTest extends FeatureTestCase
 			'name' => 'dika',
 			'email' => 'masdika@gmail.com',
 			'password' => 'masdikaid',
+			'confirm_password' => 'masdikaid',
 			'phone' => '085771002550'
 		];
 
 		$res = $this->call('post', '/users/create', $criteria);
 
 		unset($criteria['password']);
+		unset($criteria['confirm_password']);
+
 		
 		$res->assertOK();
 		$res->assertRedirect();

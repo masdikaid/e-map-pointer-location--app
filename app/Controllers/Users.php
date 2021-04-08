@@ -7,27 +7,38 @@ use App\Entities\UserEntity;
 
 class Users extends BaseController
 {
+
+    public function index()
+    {
+        $model = model('UserModel');
+        $res = $model->findAll();
+        $this->view->setData([
+            'users' => $res
+        ]);
+        return $this->view->render('content/users/user_list');
+    }
+    
     public function create()
     {
-        $user = new UserEntity();
+        $entity = new UserEntity();
         $model = model('UserModel');
-
+        
         if ($this->request->getMethod() === 'get')
         {
             return $this->view->render('content/users/create_user');
         } 
-        elseif ($this->request->getMethod() === 'post' && $this->validate('users')) 
+        elseif ($this->request->getMethod() === 'post' && $this->validate('create_users')) 
         {
             $data = $this->request->getPost();
 
-            $user->name = $data['name'];
-            $user->email = $data['email'];
-            $user->password = $data['password'];
-            $user->phone = $data['phone'];
+            $entity->name = $data['name'];
+            $entity->email = $data['email'];
+            $entity->password = $data['password'];
+            $entity->phone = $data['phone'];
 
-            $model->save($user);
+            $model->save($entity);
             
-            return redirect()->to('/');
+            return redirect()->to('/users');
         } 
         else 
         {

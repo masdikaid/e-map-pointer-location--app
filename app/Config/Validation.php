@@ -36,43 +36,23 @@ class Validation
 		'list'   => 'CodeIgniter\Validation\Views\list',
 		'single' => 'CodeIgniter\Validation\Views\single',
 	];
-
-	public $users = [
-		'name' => [
-			'rules' => 'required|min_length[3]',
-			'errors' => [
-				'required' => 'you must fill your name.',
-				'min_length' => 'the minimum character is 3 or more.'
-			]
-		],
-		'password' => [
-			'rules' => 'required|min_length[8]',
-			'errors' => [
-				'required' => 'you must fill your password.',
-				'min_length' => 'the minimum character is 8 or more.'
-			]
-		],
-		'email' => [
-			'rules' => 'required|valid_email|is_unique[users.email]',
-			'errors' => [
-				'required' => 'you must fill your email.',
-				'valid_email' => 'you must fill the valid email.',
-				'is_unique' => 'email already exists'
-			]
-		],
-		'phone' => [
-			'rules' => 'required|numeric|min_length[9]|max_length[13]|is_unique[users.phone]',
-			'errors' => [
-				'required' => 'you must fill your phone number.',
-				'min_length' => 'your phone number not valid.',
-				'max_length' => 'your phone number not valid.',
-				'is_unique' => 'phone number already exists'
-			]
-		]
-
-	];
-
+	
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------
+
+	public $users = [
+		'name' => 'required|min_length[3]',
+		'password' => 'required|min_length[8]',
+		'email' => 'required|valid_email|is_unique[users.email]',
+		'phone' =>  'required|numeric|min_length[9]|max_length[13]|is_unique[users.phone]'
+	];
+	
+	public $create_users = [
+		'name' => 'required|min_length[3]',
+		'password' => 'required|min_length[8]',
+		'confirm_password' => 'required|min_length[8]|matches[password]',
+		'email' => 'required|valid_email|is_unique[users.email]',
+		'phone' =>  'required|numeric|min_length[9]|max_length[13]|is_unique[users.phone]'
+	];
 }

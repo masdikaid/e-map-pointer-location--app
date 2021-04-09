@@ -1,4 +1,5 @@
+<h1>User List</h1>
 <?php foreach ($users as $user) : ?>
-    <h5><?= $user->name ?></h5>
+    <p><?= $user->name ?></p>
     <p><?= $user->email ?></p>
 <?php endforeach; ?>

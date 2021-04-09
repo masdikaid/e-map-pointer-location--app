@@ -73,9 +73,13 @@ class Users extends BaseController
     public function delete(int $id)
     {
         $model = model('UserModel');
-        if ($res = $model->delete($id))
+        
+        if ($res = $model->find($id))
         {
-            return redirect()->to('/users');
+            if($res = $model->delete($id))
+            {
+                return redirect()->to('/users');
+            }
         }
         else 
         {

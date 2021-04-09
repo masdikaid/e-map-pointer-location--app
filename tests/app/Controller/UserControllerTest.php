@@ -18,6 +18,7 @@ class UserControllerTest extends FeatureTestCase
 	public function setUp(): void
 	{
 		parent::setUp();
+		$this->model = new UserFabricator();
 	}
 	
 	public function tearDown(): void
@@ -66,6 +67,12 @@ class UserControllerTest extends FeatureTestCase
 	{
 		$this->expectException(\CodeIgniter\Exceptions\PageNotFoundException::class);
 		$res = $this->call('get', "/users/delete/100");
+	}
+
+	public function testGivenStringInDeleteUser()
+	{
+		$this->expectException(\TypeError::class);
+		$res = $this->call('get', "/users/delete/as");
 	}
 
 	public function testGetCreateUser()
